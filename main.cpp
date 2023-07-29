@@ -18,7 +18,26 @@ void encode_string(const char string[], bool bytes[][8])
     {
         int x = (int)string[i];
         int y = (int)string[i];
-
+        if (y % 2 == 0)
+        {
+            for (int c = 0; c < 8; c++)
+            {
+                if (arr[c] > y)
+                {
+                    bytes[i][c] = false;
+                }
+                if (arr[c] == y)
+                {
+                    bytes[i][c] = true;
+                    y = 0;
+                }
+                if (arr[c] < y)
+                {
+                    y = y % arr[c];
+                    bytes[i][c] = true;
+                }
+            }
+        }
         if (x % 2 != 0)
         {
             bytes[i][7] = true;
@@ -39,26 +58,6 @@ void encode_string(const char string[], bool bytes[][8])
                 {
                     x = x % arr[b];
                     bytes[i][b] = true;
-                }
-            }
-        }
-        if (y % 2 == 0)
-        {
-            for (int c = 0; c < 8; c++)
-            {
-                if (arr[c] > y)
-                {
-                    bytes[i][c] = false;
-                }
-                if (arr[c] == y)
-                {
-                    bytes[i][c] = true;
-                    y = 0;
-                }
-                if (arr[c] < y)
-                {
-                    y = y % arr[c];
-                    bytes[i][c] = true;
                 }
             }
         }
